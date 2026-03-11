@@ -2,12 +2,15 @@ name: UI Tests
 
 on:
   push:
+    branches: [ main ]
   pull_request:
   workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    # This matches the name of the environment you created in Settings
+    environment: Production
 
     steps:
       - name: Checkout
@@ -25,16 +28,7 @@ jobs:
 
       - name: Generate Allure report
         if: always()
-        continue-on-error: true
         run: mvn -B allure:report
-
-      - name: Upload allure-results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: allure-results
-          if-no-files-found: warn
 
       - name: Upload Allure HTML report
         if: always()
@@ -42,13 +36,3 @@ jobs:
         with:
           name: allure-report
           path: target/site/allure-maven-plugin
-          if-no-files-found: warn
-
-      - name: Upload Surefire reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: surefire-reports
-          path: target/surefire-reports
-          if-no-files-found: warn
-
