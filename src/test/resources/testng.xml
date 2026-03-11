@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="UI Suite" parallel="false">
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+        <listener class-name="com.complya.framework.retry.RetryListener"/>
+    </listeners>
+
+    <test name="UI Tests">
+        <packages>
+            <package name="com.complya.tests"/>
+        </packages>
+    </test>
+</suite>
+
