@@ -3,13 +3,18 @@ name: UI Tests
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'src/test/**' # Only triggers if files in your test folder change
   pull_request:
-  workflow_dispatch:
+    branches: [ main ]
+    paths:
+      - 'src/test/**'
+  workflow_dispatch: # Allows you to manually trigger it from the UI anytime
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    # This matches the name of the environment you created in Settings
+    # Ensure this name exactly matches the Environment name in your GitHub Settings
     environment: Production
 
     steps:
