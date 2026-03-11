@@ -40,6 +40,12 @@ jobs:
         if: always()
         run: mvn -B allure:report
 
+      - name: Verify Allure output
+        if: always()
+        run: |
+          ls -l target/site/allure-maven-plugin
+          test -f target/site/allure-maven-plugin/index.html
+
       - name: Upload Allure HTML report (artifact)
         if: always()
         uses: actions/upload-artifact@v4
