@@ -92,8 +92,8 @@
                         <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemPropertyVariables>
-                        <!-- Default location; can be overridden if needed -->
-                        <allure.results.directory>${project.basedir}/allure-results</allure.results.directory>
+                        <!-- Keep Allure results under target so report goal can find them -->
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                     </systemPropertyVariables>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useModulePath>false</useModulePath>
