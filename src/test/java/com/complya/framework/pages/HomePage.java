@@ -21,30 +21,30 @@ public class HomePage extends BasePage {
     }
 
     // --- Authentication & Lead Gen ---
-    @FindBy(xpath = "//a[contains(@href, '/app/') and text()='Login']")
+    @FindBy(xpath = "//a[normalize-space()='Login']]")
     private WebElement loginBtn;
 
-    @FindBy(xpath = "//div[contains(@class, 'hero-buttons')]//a[text()='Try for free']")
+    @FindBy(xpath = "//a[normalize-space()='Try for free']")
     private WebElement tryForFreeBtn;
 
-    @FindBy(xpath = "//nav//button[contains(text(), 'Get a demo')]")
+    @FindBy(xpath = "//div[@class='btn-wrapper']//button[@class='btn-aqua'][normalize-space()='Get a demo']")
     private WebElement getADemoNavBtn;
 
     // --- Branding & Content ---
-    @FindBy(xpath = "//a[contains(@class, 'navbar-brand')]")
+    @FindBy(xpath = "//nav[@id='mainNavbar']//img[@alt='Complya logo']")
     private WebElement siteLogo;
 
-    @FindBy(xpath = "//div[contains(@class, 'banner-content')]//h1")
+    @FindBy(xpath = "//h1[@class='small']")
     private WebElement mainHeading;
 
-    @FindBy(xpath = "//div[contains(@class, 'banner-content')]//p")
+    @FindBy(xpath = "//p[@class='large']")
     private WebElement heroDescription;
 
     // --- Sections ---
-    @FindBy(xpath = "//section[contains(@class, 'pricing-section')]")
+    @FindBy(xpath = "//h1[normalize-space()='Transparent Pricing.No added fees.']")
     private WebElement pricingSection;
 
-    @FindBy(xpath = "//footer[contains(@class, 'footer-main-wrapper')]")
+    @FindBy(xpath = "//div[@class='links-sections']")
     private WebElement footer;
 
     @Step("Verify the Home Page UI loads properly")
