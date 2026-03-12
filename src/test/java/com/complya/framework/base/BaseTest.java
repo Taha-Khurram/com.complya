@@ -13,6 +13,7 @@ public abstract class BaseTest {
     public void setUp() {
         WebDriver driver = BrowserFactory.createDriver();
         DriverManager.setDriver(driver);
+        driver.manage().window().maximize();
 
         // Optional: open baseUrl by default for UI tests.
         String baseUrl = ConfigReader.get("baseUrl", "");
