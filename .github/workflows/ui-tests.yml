@@ -33,6 +33,12 @@ jobs:
           java-version: "17"
           cache: maven
 
+      - name: Setup Chrome
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
       - name: Run TestNG tests
         run: mvn -B test
 
