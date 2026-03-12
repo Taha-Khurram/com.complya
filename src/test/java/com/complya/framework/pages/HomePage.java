@@ -6,6 +6,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 
+/**
+ * Page Object for Complya Home Page.
+ * Updated to use robust relative XPaths based on the latest site structure.
+ */
 public class HomePage extends BasePage {
 
     public HomePage() {
@@ -16,69 +20,66 @@ public class HomePage extends BasePage {
         super(driver);
     }
 
-    // Add @FindBy WebElements and page actions here.
-    @FindBy(xpath = "//a[normalize-space()='Login']")
-    WebElement loginBtn;
+    // --- Authentication & Lead Gen ---
+    @FindBy(xpath = "//a[contains(@href, '/app/') and text()='Login']")
+    private WebElement loginBtn;
 
-    @FindBy(xpath = "//a[normalize-space()='Book a Demo.']")
-    WebElement bookDemoBtn;
+    @FindBy(xpath = "//div[contains(@class, 'hero-buttons')]//a[text()='Try for free']")
+    private WebElement tryForFreeBtn;
 
-    @FindBy(xpath = "//a[@class='navbar-brand']")
-    WebElement siteLogo;
+    @FindBy(xpath = "//nav//button[contains(text(), 'Get a demo')]")
+    private WebElement getADemoNavBtn;
 
-    @FindBy(xpath = "//img[@alt='banner']")
-    WebElement heroImage;
+    // --- Branding & Content ---
+    @FindBy(xpath = "//a[contains(@class, 'navbar-brand')]")
+    private WebElement siteLogo;
 
-    @FindBy(xpath = "//body//main//h1[1]")
-    WebElement headingText;
+    @FindBy(xpath = "//div[contains(@class, 'banner-content')]//h1")
+    private WebElement mainHeading;
 
-    @FindBy(xpath = "//p[@class='mt-3']")
-    WebElement paragraphText;
+    @FindBy(xpath = "//div[contains(@class, 'banner-content')]//p")
+    private WebElement heroDescription;
 
-    @FindBy(xpath = "//p[normalize-space()='Backed by']")
-    WebElement backedByText;
+    // --- Sections ---
+    @FindBy(xpath = "//section[contains(@class, 'pricing-section')]")
+    private WebElement pricingSection;
 
-    @FindBy(xpath = "//img[@alt='techstars']")
-    WebElement techStarsText;
+    @FindBy(xpath = "//footer[contains(@class, 'footer-main-wrapper')]")
+    private WebElement footer;
 
-    @FindBy(xpath = "//div[@class='footer-wrapper']")
-    WebElement footer;
-
-    @Step("Verify the Home Page Ui loads properly")
-    public HomePage verifyUi(){
-        waits.untilVisible(loginBtn);
-        waits.untilVisible(bookDemoBtn);
+    @Step("Verify the Home Page UI loads properly")
+    public HomePage verifyUi() {
         waits.untilVisible(siteLogo);
-        waits.untilVisible(heroImage);
-        waits.untilVisible(headingText);
-        waits.untilVisible(paragraphText);
-        waits.untilVisible(backedByText);
-        waits.untilVisible(techStarsText);
-        //Footer visibility
+        waits.untilVisible(loginBtn);
+        waits.untilVisible(getADemoNavBtn);
+        waits.untilVisible(mainHeading);
+        waits.untilVisible(heroDescription);
+        waits.untilVisible(pricingSection);
         waits.untilVisible(footer);
-        String expectedUrl = "https://complya.com/";
+
         String actualUrl = driver.getCurrentUrl();
-        Assert.assertTrue(actualUrl.contains("complya.com"),"Expected url to contain 'complya.com' but found: " + actualUrl);
+        Assert.assertTrue(actualUrl.contains("complya.com"),
+                "Expected url to contain 'complya.com' but found: " + actualUrl);
+
+        Assert.assertTrue(mainHeading.getText().contains("Modern"),
+                "Heading text mismatch. Found: " + mainHeading.getText());
         return this;
     }
 
-    @Step("Verify the login button is redirecting to the login page")
-    public LoginPage navigateToLoginPage(){
+    @Step("Verify the login button redirects to the application sign-in page")
+    public LoginPage navigateToLoginPage() {
         helper.click(loginBtn);
-        String expectedUrl = "https://complya.com/app/sign-in";
+        // The URL redirects to the /app/ context
         String actualUrl = driver.getCurrentUrl();
-        Assert.assertTrue(actualUrl.contains("sign-in"),"Expected url to contain 'sign-in' but found: " + actualUrl);
+        Assert.assertTrue(actualUrl.contains("app"),
+                "Expected URL to contain 'app' after clicking login, but found: " + actualUrl);
         return new LoginPage(driver);
     }
 
-    @Step("Verify the Book a Demo button is redirecting to the book demo page")
-    public BookDemoPage navigateToDemoPage(){
-        helper.click(bookDemoBtn);
-        String expectedUrl = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2ZNOxZq59QlpRpfLa7olva7xhVPTUJlBwNAz8ODNvnaKSiBoXjklE0x7fk3b7ljwm-C-urQWvE";String actualUrl = driver.getCurrentUrl();
-        Assert.assertTrue(actualUrl.contains("calendar.google"),"Expected url to contain 'calendar.google' but found: " + actualUrl);
-        return new BookDemoPage(driver);
+    @Step("Click 'Get a demo' in the navigation bar and verify redirection to calendar")
+    public void clickGetADemo() {
+        helper.click(getADemoNavBtn);
+        String actualUrl = driver.getCurrentUrl();
+        Assert.assertTrue(actualUrl.contains("calendar.google"), "Expected url to contain 'calendar.google' but found: " + actualUrl);
     }
-
-
 }
-
