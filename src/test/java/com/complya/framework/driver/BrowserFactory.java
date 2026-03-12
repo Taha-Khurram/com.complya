@@ -47,6 +47,13 @@ public final class BrowserFactory {
                 if (headless) {
                     options.addArguments("--headless=new");
                 }
+                String chromeBinary = System.getenv("CHROME_PATH");
+                if (chromeBinary == null || chromeBinary.isBlank()) {
+                    chromeBinary = System.getenv("CHROME_BIN");
+                }
+                if (chromeBinary != null && !chromeBinary.isBlank()) {
+                    options.setBinary(chromeBinary);
+                }
                 options.addArguments("--window-size=1920,1080");
                 options.addArguments("--no-sandbox");
                 options.addArguments("--disable-dev-shm-usage");
@@ -59,4 +66,3 @@ public final class BrowserFactory {
         return driver;
     }
 }
-
