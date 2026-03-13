@@ -59,6 +59,13 @@ public class LoginPage extends BasePage{
     @FindBy(xpath = "//div[contains(text(),'Invalid email or password. Please try again.')]")
     WebElement invalidLoginMsg;
 
+    @FindBy(xpath = "//span[normalize-space()='Email is required']")
+    WebElement emptyEmailMsg;
+
+    @FindBy(xpath = "//span[normalize-space()='Password is required']")
+    WebElement emptyPasswordMsg;
+
+
     @Step("Verify the Login page UI loads properly")
     public LoginPage verifyUI(){
         waits.untilVisible(welcomeText);
@@ -98,6 +105,19 @@ public class LoginPage extends BasePage{
         helper.click(rememberMeCheckbox);
         helper.click(signInBtn);
         waits.untilVisible(invalidLoginMsg);
+        String actualUrl = driver.getCurrentUrl();
+        Assert.assertTrue(actualUrl.contains("sign-in"),"Expected url to contain 'sign-in' but found: " + actualUrl);
+        return this;
+    }
+
+    @Step("Method for the empty login")
+    public LoginPage emptyLoginUser(String email, String password){
+        emailField.sendKeys(email);
+        passwordField.sendKeys(password);
+        helper.click(rememberMeCheckbox);
+        helper.click(signInBtn);
+        waits.untilVisible(emptyEmailMsg);
+        waits.untilVisible(emptyPasswordMsg);
         String actualUrl = driver.getCurrentUrl();
         Assert.assertTrue(actualUrl.contains("sign-in"),"Expected url to contain 'sign-in' but found: " + actualUrl);
         return this;

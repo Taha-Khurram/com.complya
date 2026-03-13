@@ -47,7 +47,14 @@ public class LoginPageTests extends BaseTest {
         System.out.println("Invalid username or password");
     }
 
-
+    @Feature("Verify Empty field Login Functionality")
+    @Story("Test to verify that the user with empty fields cannot login")
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(priority = 3, description = "Verify that empty fields cannot allow login")
+    public void testEmptyFieldUserLogin(){
+        login.emptyLoginUser("","");
+        System.out.println("Empty field dont allow login");
+    }
 
 
 
